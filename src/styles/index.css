@@ -53,12 +53,58 @@ body {
   min-height: 100dvh;
 }
 
-/* Screens */
-.screen {
+/* App shell + tab bar */
+.app {
   min-height: 100dvh;
-  padding: var(--safe-top) 20px 24px;
+  display: flex;
+  flex-direction: column;
   max-width: 480px;
   margin: 0 auto;
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
+.app-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: calc(56px + var(--safe-bottom));
+}
+.tab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 56px;
+  padding-bottom: var(--safe-bottom);
+  background: var(--surface);
+  border-top: 1px solid var(--separator);
+  flex-shrink: 0;
+}
+.tab-bar-item {
+  flex: 1;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 12px;
+}
+.tab-bar-item.active {
+  color: var(--tint);
+  font-weight: 600;
+}
+.tab-bar-item:active {
+  opacity: 0.7;
+}
+
+/* Screens */
+.screen {
+  min-height: 100%;
+  padding: var(--safe-top) 20px 24px;
+  margin: 0 auto;
+  max-width: 480px;
+  width: 100%;
 }
 
 /* Header */
@@ -258,6 +304,93 @@ body {
   color: var(--negative);
 }
 
+/* Wealth */
+.wealth-hero {
+  text-align: center;
+  padding: 24px 0 16px;
+}
+.wealth-total {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+.wealth-growth {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 8px 0 0;
+}
+.wealth-growth.positive {
+  color: var(--positive);
+}
+.wealth-growth.negative {
+  color: var(--negative);
+}
+.wealth-growth-pct {
+  font-size: 0.85em;
+  font-weight: 500;
+}
+.wealth-chart {
+  overflow: visible;
+}
+.wealth-chart .card-label {
+  margin-bottom: 12px;
+}
+.wealth-pie-wrap {
+  width: 100%;
+  min-height: 340px;
+}
+.wealth-holdings .edit-purchases-header {
+  margin-bottom: 12px;
+}
+.wealth-holding-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.wealth-holding-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--separator);
+  font-size: 15px;
+}
+.wealth-holding-row:last-child {
+  border-bottom: none;
+}
+.wealth-holding-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.wealth-holding-name {
+  font-weight: 600;
+  color: var(--text);
+}
+.wealth-holding-values {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.wealth-holding-value {
+  font-weight: 600;
+}
+.wealth-holding-gain {
+  font-size: 13px;
+}
+.wealth-holding-gain.positive {
+  color: var(--positive);
+}
+.wealth-holding-gain.negative {
+  color: var(--negative);
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -319,6 +452,19 @@ body {
 
 .input::placeholder {
   color: var(--text-secondary);
+}
+.input-with-select {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.input-with-select .input {
+  flex: 1;
+}
+.input-currency {
+  flex-shrink: 0;
+  width: 80px;
+  cursor: pointer;
 }
 
 .field-error {

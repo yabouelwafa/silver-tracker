@@ -2,6 +2,7 @@ const KEYS = {
   SILVER_OUNCES: 'silver_ounces',
   AVERAGE_BUY_PRICE_CAD: 'average_buy_price_cad',
   SILVER_PURCHASES: 'silver_purchases',
+  WEALTH_STOCKS: 'wealth_stocks',
   ALPHAVANTAGE_API_KEY: 'alphavantage_api_key',
   PRICE_CACHE: 'silver_tracker_price_cache',
   PRICE_CACHE_TTL_MS: 5 * 60 * 1000, // 5 minutes
@@ -127,4 +128,42 @@ export function setPriceCache(silverUsd, silverCad) {
     silverCad,
     timestamp: Date.now(),
   })
+}
+
+// Wealth / stock holdings
+export function getWealthStocks() {
+  const raw = get(KEYS.WEALTH_STOCKS)
+  if (!Array.isArray(raw)) return []
+  return raw
+    .filter((s) => s && typeof s.symbol === 'string' && s.symbol.trim())
+    .map((s) => {
+      const currency = s.priceCurrency === 'USD' ? 'USD' : 'CAD'
+      const avgPrice = typeof s.avgPrice === 'number' && s.avgPrice >= 0
+        ? s.avgPrice
+        : (typeof s.avgPriceCad === 'number' && s.avgPriceCad >= 0 ? s.avgPriceCad : 0)
+      return {
+        id: s.id ?? String(Date.now()),
+        symbol: String(s.symbol).trim().toUpperCase(),
+        shares: typeof s.shares === 'number' && s.shares > 0 ? s.shares : 0,
+        avgPrice,
+        priceCurrency: currency,
+      }
+    })
+    .filter((s) => s.shares > 0)
+}
+
+export function addWealthStock(symbol, shares, avgPrice, priceCurrency = 'CAD') {
+  const sym = typeof symbol === 'string' ? symbol.trim().toUpperCase() : ''
+  const sh = Number(shares)
+  const avg = Number(avgPrice)
+  const currency = priceCurrency === 'USD' ? 'USD' : 'CAD'
+  if (!sym || !Number.isFinite(sh) || sh <= 0 || !Number.isFinite(avg) || avg < 0) return
+  const list = getWealthStocks()
+  list.push({ id: String(Date.now()), symbol: sym, shares: sh, avgPrice: avg, priceCurrency: currency })
+  set(KEYS.WEALTH_STOCKS, list)
+}
+
+export function removeWealthStock(id) {
+  const list = getWealthStocks().filter((s) => s.id !== id)
+  set(KEYS.WEALTH_STOCKS, list)
 }
