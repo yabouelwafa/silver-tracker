@@ -200,6 +200,63 @@ body {
   margin: 0;
   font-size: 15px;
 }
+.home-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Edit holdings */
+.edit-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.edit-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  font-size: 15px;
+}
+.edit-summary-value {
+  font-weight: 600;
+}
+.edit-purchases-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.edit-purchases-header .card-label {
+  margin: 0;
+}
+.purchase-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.purchase-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--separator);
+  font-size: 15px;
+}
+.purchase-item:last-child {
+  border-bottom: none;
+}
+.purchase-desc {
+  color: var(--text);
+}
+.purchase-remove {
+  flex-shrink: 0;
+  color: var(--negative);
+}
 
 /* Buttons */
 .btn {

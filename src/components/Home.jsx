@@ -24,7 +24,7 @@ function formatNumber(n, decimals = 2) {
   }).format(n)
 }
 
-export default function Home({ onEditHoldings }) {
+export default function Home({ onEditHoldings, onAddSilver }) {
   const [ounces, setOunces] = useState(0)
   const [buyPrice, setBuyPrice] = useState(null)
   const [silverUsd, setSilverUsd] = useState(null)
@@ -130,9 +130,14 @@ export default function Home({ onEditHoldings }) {
         <section className="card home-details">
           <p className="home-detail-row">
             <span className="muted">{formatNumber(ounces)} troy oz</span>
-            <button type="button" className="btn-link small" onClick={onEditHoldings}>
-              Edit holdings
-            </button>
+            <span className="home-detail-actions">
+              <button type="button" className="btn-link small" onClick={onAddSilver}>
+                Add silver
+              </button>
+              <button type="button" className="btn-link small" onClick={onEditHoldings}>
+                Edit holdings
+              </button>
+            </span>
           </p>
 
           {error && <p className="error">{error}</p>}
